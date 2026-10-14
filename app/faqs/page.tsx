@@ -182,7 +182,7 @@ export default function FAQPage() {
             className="pointer-events-none absolute -right-20 -top-36 h-[360px] w-[360px] rounded-full border border-[#e0eee9]"
           />
 
-          <div className="relative mx-auto w-[min(100%-32px,1180px)]">
+          <div className="relative mx-auto container">
             {/* Breadcrumb */}
             <div className="mb-8 flex items-center gap-2 text-[11px] text-[#819590] sm:mb-10">
               <Link

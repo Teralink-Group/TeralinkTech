@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Teralink Technical Solutions",
+  title: "Privacy Policy",
   description:
     "Read the Privacy Policy of Teralink Technical Solutions to understand how we collect, use, protect and manage personal information.",
   alternates: {

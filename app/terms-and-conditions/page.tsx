@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Terms & Conditions | Teralink Technical Solutions",
+  title: "Terms & Conditions",
   description:
     "Read the Terms and Conditions governing the use of the Teralink Technical Solutions website, enquiries, quotations and IT services.",
   alternates: {
@@ -149,7 +149,7 @@ const sections = [
     title: "17. Governing Law and Disputes",
     paragraphs: [
       "These terms are subject to applicable law. The governing law, jurisdiction and dispute-resolution arrangements for a particular service should be confirmed in the relevant contract or proposal.",
-      "Before publication, Teralink should specify its legal business name, registered or principal business address, governing jurisdiction and any appropriate dispute-resolution provisions.",
+      // "Before publication, Teralink should specify its legal business name, registered or principal business address, governing jurisdiction and any appropriate dispute-resolution provisions.",
     ],
   },
 ];

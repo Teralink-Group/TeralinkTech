@@ -20,9 +20,9 @@ export default function TechnologyBrands() {
   const duplicatedBrands = [...brands, ...brands];
 
   return (
-    <section className="overflow-hidden border-y border-[#dcebe7] bg-white py-16 sm:py-20">
+    <section className="overflow-hidden border-y border-[#dcebe7] bg-white py-8 sm:py-12">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="mx-auto mb-10 max-w-2xl text-center">
+        <div className="mx-auto mb-6 max-w-2xl text-center">
           <span className="mb-3 inline-block text-xs font-bold uppercase tracking-[0.2em] text-[#008276]">
             Technology Ecosystem
           </span>

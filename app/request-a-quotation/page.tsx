@@ -12,6 +12,7 @@ import {
   ShieldCheck,
   Package,
 } from "lucide-react";
+import { submitEnquiry } from "@/lib/submit-enquiry";
 
 const services = [
   "IT Support & Annual Maintenance (AMC)",
@@ -28,7 +29,6 @@ const services = [
   "Other / Multiple Services",
 ];
 
-
 const budgetOptions = [
   "Not decided yet",
   "Under AED 1,000",
@@ -39,16 +39,20 @@ const budgetOptions = [
   "Above AED 25,000",
 ];
 
+const inputClass =
+  "mt-2 w-full rounded-xl border border-[#dcebe7] bg-white px-4 py-3 text-sm text-[#163d3a] outline-none transition placeholder:text-[#9aadaa] focus:border-[#008276] focus:ring-4 focus:ring-[#008276]/10";
+
+const labelClass = "text-sm font-semibold text-[#163d3a]";
+
+type FormStatus = {
+  type: "success" | "error";
+  message: string;
+};
 
 export default function RequestQuotationPage() {
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
-  const [message, setMessage] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-
-  const inputClass =
-    "mt-2 w-full rounded-xl border border-[#dcebe7] bg-white px-4 py-3 text-sm text-[#163d3a] outline-none transition placeholder:text-[#9aadaa] focus:border-[#008276] focus:ring-4 focus:ring-[#008276]/10";
-
-  const labelClass = "text-sm font-semibold text-[#163d3a]";
+  const [status, setStatus] = useState<FormStatus | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   function toggleService(service: string) {
     setSelectedServices((current) =>
@@ -58,19 +62,47 @@ export default function RequestQuotationPage() {
     );
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setSubmitted(false);
+
+    if (isSubmitting) return;
+
+    setStatus(null);
 
     if (selectedServices.length === 0) {
-      setMessage("Please select at least one service.");
+      setStatus({
+        type: "error",
+        message: "Please select at least one service.",
+      });
       return;
     }
 
-    // Connect this handler to your API, email service or CRM.
-    setMessage(
-      "The form is ready for integration. Connect your submission API to send your quotation request to Teralink."
-    );
+    const form = event.currentTarget;
+
+    setIsSubmitting(true);
+
+    try {
+      await submitEnquiry(form, "quotation");
+
+      setStatus({
+        type: "success",
+        message:
+          "Thank you! Your quotation request has been submitted successfully. Our team will review your requirements and get back to you.",
+      });
+
+      form.reset();
+      setSelectedServices([]);
+    } catch (error) {
+      setStatus({
+        type: "error",
+        message:
+          error instanceof Error
+            ? error.message
+            : "We could not submit your request. Please try again.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -80,7 +112,7 @@ export default function RequestQuotationPage() {
         <div className="absolute -right-24 -top-24 h-80 w-80 rounded-full bg-[#00a79a]/20 blur-3xl" />
         <div className="absolute -bottom-28 left-10 h-64 w-64 rounded-full bg-[#008276]/20 blur-3xl" />
 
-        <div className="relative mx-auto grid container items-center gap-12 py-16 sm:py-20 lg:grid-cols-[1.1fr_0.9fr] lg:py-24">
+        <div className="relative container mx-auto grid items-center gap-12 py-16 sm:py-20 lg:grid-cols-[1.1fr_0.9fr] lg:pt-36">
           <div>
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-teal-100">
               <FileText size={15} />
@@ -146,7 +178,7 @@ export default function RequestQuotationPage() {
       </section>
 
       {/* Form */}
-      <section className="mx-auto grid container gap-8 py-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-10">
+      <section className="container mx-auto grid gap-8 py-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-10">
         <div className="rounded-2xl border border-[#dcebe7] bg-white p-5 shadow-[0_12px_45px_rgba(0,60,60,0.05)] sm:p-8 lg:p-10">
           <div className="mb-8 border-b border-[#e7f0ee] pb-6">
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#008276]">
@@ -226,18 +258,6 @@ export default function RequestQuotationPage() {
                     placeholder="City and country"
                   />
                 </label>
-
-                <label className={labelClass}>
-                  Your role
-                  <select name="role" defaultValue="" className={inputClass}>
-                    <option value="">Select your role</option>
-                    <option>Business owner / Director</option>
-                    <option>IT Manager / Administrator</option>
-                    <option>Operations / Facilities Manager</option>
-                    <option>Procurement</option>
-                    <option>Other</option>
-                  </select>
-                </label>
               </div>
             </fieldset>
 
@@ -268,6 +288,8 @@ export default function RequestQuotationPage() {
                     >
                       <input
                         type="checkbox"
+                        name="services"
+                        value={service}
                         checked={checked}
                         onChange={() => toggleService(service)}
                         className="mt-1 h-4 w-4 shrink-0 accent-[#008276]"
@@ -367,32 +389,6 @@ export default function RequestQuotationPage() {
                     placeholder="Describe your requirements, equipment quantities, existing setup, number of locations, preferred brands or any specific technical needs."
                   />
                 </label>
-
-                <label className={`${labelClass} sm:col-span-2`}>
-                  Additional information
-                  <textarea
-                    name="additionalInfo"
-                    rows={3}
-                    className={`${inputClass} resize-y`}
-                    placeholder="Anything else we should know?"
-                  />
-                </label>
-
-                <label className={`${labelClass} sm:col-span-2`}>
-                  How did you hear about us?
-                  <select
-                    name="source"
-                    defaultValue=""
-                    className={inputClass}
-                  >
-                    <option value="">Select an option</option>
-                    <option>Google search</option>
-                    <option>Referral</option>
-                    <option>LinkedIn / Social media</option>
-                    <option>Existing customer</option>
-                    <option>Other</option>
-                  </select>
-                </label>
               </div>
             </fieldset>
 
@@ -402,6 +398,7 @@ export default function RequestQuotationPage() {
               <input
                 name="privacyConsent"
                 type="checkbox"
+                value="true"
                 required
                 className="mt-1 h-4 w-4 shrink-0 accent-[#008276]"
               />
@@ -419,25 +416,28 @@ export default function RequestQuotationPage() {
               </span>
             </label>
 
-            {message && (
+            {/* Submission status */}
+            {status && (
               <p
-                role="status"
+                role={status.type === "error" ? "alert" : "status"}
+                aria-live="polite"
                 className={`rounded-xl border p-4 text-sm leading-6 ${
-                  submitted
+                  status.type === "success"
                     ? "border-[#b9dfd7] bg-[#f0faf7] text-[#005c52]"
-                    : "border-amber-200 bg-amber-50 text-amber-800"
+                    : "border-red-200 bg-red-50 text-red-700"
                 }`}
               >
-                {message}
+                {status.message}
               </p>
             )}
 
             <button
               type="submit"
-              className="inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-xl bg-[#003c3c] px-6 py-4 text-sm font-bold text-white shadow-[0_8px_24px_rgba(0,60,60,0.12)] transition hover:-translate-y-0.5 hover:bg-[#008276] focus:outline-none focus:ring-4 focus:ring-[#008276]/20 sm:w-auto sm:min-w-64"
+              disabled={isSubmitting}
+              className="inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-xl bg-[#003c3c] px-6 py-4 text-sm font-bold text-white shadow-[0_8px_24px_rgba(0,60,60,0.12)] transition hover:-translate-y-0.5 hover:bg-[#008276] focus:outline-none focus:ring-4 focus:ring-[#008276]/20 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:min-w-64"
             >
-              Submit Quotation Request
-              <ArrowRight size={17} />
+              {isSubmitting ? "Submitting request..." : "Submit Quotation Request"}
+              {!isSubmitting && <ArrowRight size={17} />}
             </button>
 
             <p className="text-xs leading-6 text-[#82938f]">
@@ -455,9 +455,7 @@ export default function RequestQuotationPage() {
               <ClipboardList size={23} />
             </span>
 
-            <h2 className="mt-5 text-xl font-bold">
-              How it works
-            </h2>
+            <h2 className="mt-5 text-xl font-bold">How it works</h2>
 
             <div className="mt-6 space-y-5">
               {[

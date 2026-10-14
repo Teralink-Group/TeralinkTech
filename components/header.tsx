@@ -141,7 +141,7 @@ export default function Header() {
             TOP ANNOUNCEMENT BAR
         ================================================= */}
 
-        <div className="h-[30px] bg-[#003c3c] font-medium tracking-[0.06em] text-white sm:h-[32px] sm:text-[9px]">
+        {/* <div className="h-[30px] bg-[#003c3c] font-medium tracking-[0.06em] text-white sm:h-[32px] sm:text-[9px]">
           <div className="mx-auto flex h-full w-[calc(100%-32px)] container items-center justify-between">
             <span className="text-[12px]">
               Technology that keeps business moving.
@@ -151,7 +151,7 @@ export default function Header() {
               Business IT support · Infrastructure · Security
             </span>
           </div>
-        </div>
+        </div> */}
 
         {/* =================================================
             MAIN NAVIGATION
@@ -257,7 +257,7 @@ export default function Header() {
   =================================================== */}
 
                 <div
-                  className={`absolute left-1/2 top-full z-[120] w-[900px] -translate-x-1/2 pt-2 transition-all duration-200 ${
+                  className={`absolute left-1/2 top-full z-[120] w-[1000px] -translate-x-1/2 pt-2 transition-all duration-200 ${
                     servicesOpen
                       ? "pointer-events-auto visible translate-y-0 opacity-100"
                       : "pointer-events-none invisible -translate-y-2 opacity-0"
@@ -306,7 +306,7 @@ export default function Header() {
                               key={service.slug}
                               href={`/services/${service.slug}`}
                               onClick={() => setServicesOpen(false)}
-                              className="group flex min-h-[72px] items-center gap-3 rounded-xl border border-transparent px-3 transition-all duration-200 hover:border-[#dcebe7] hover:bg-[#f4faf8]"
+                              className="group flex min-h-[58px] items-center gap-3 rounded-xl border border-transparent px-3 transition-all duration-200 hover:border-[#dcebe7] hover:bg-[#f4faf8]"
                             >
                               <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#e8f5f2] text-[#008276] transition-colors duration-200 group-hover:bg-[#003c3c] group-hover:text-white">
                                 <Icon size={18} strokeWidth={1.8} />
@@ -406,7 +406,7 @@ export default function Header() {
         <div
           id="mobile-navigation"
           aria-hidden={!mobileOpen}
-          className={`fixed inset-x-0 bottom-0 top-[100px] z-[90] overflow-y-auto bg-white transition-all duration-300 sm:top-[102px] lg:top-[110px] lg:hidden ${
+          className={`fixed inset-x-0 bottom-0 top-[70px] z-[90] overflow-y-auto bg-white transition-all duration-300 sm:top-[102px] lg:top-[110px] lg:hidden ${
             mobileOpen
               ? "pointer-events-auto visible translate-y-0 opacity-100"
               : "pointer-events-none invisible -translate-y-3 opacity-0"
@@ -546,8 +546,17 @@ export default function Header() {
                 MOBILE CTA
             ================================================= */}
 
+             <Link
+                href="/request-site-survey"
+                onClick={closeMobile}
+                className="mt-5 flex min-h-[52px] w-full border items-center justify-center gap-2 rounded-xl bg-[#fff] px-5 text-[#163d3a] text-[13px] font-bold shadow-[0_6px_18px_rgba(0,60,60,0.12)] transition-all duration-200 hover:bg-[#00674F]"
+              >
+                Request a Site Survey
+                <ArrowUpRight size={15} />
+              </Link>
+
             <Link
-              href="/contact"
+              href="/request-a-quotation"
               onClick={closeMobile}
               className="mt-5 flex min-h-[52px] w-full items-center justify-center gap-2 rounded-xl bg-[#003c3c] px-5 text-[13px] font-bold text-white shadow-[0_8px_24px_rgba(0,60,60,0.12)] transition-all duration-200 hover:bg-[#008276]"
             >
@@ -573,7 +582,7 @@ export default function Header() {
           fixed header.
       ===================================================== */}
 
-      <div className="h-[100px] sm:h-[102px] lg:h-[110px]" aria-hidden="true" />
+      <div className="h-[70px] sm:h-[12px] lg:h-[10px]" aria-hidden="true" />
     </>
   );
 }

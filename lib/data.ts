@@ -24,7 +24,7 @@ export type Service = {
 export const services: Service[] = [
   {
     slug: "it-support-maintenance",
-    title: "IT Support & Maintenance",
+    title: "IT Support & Annual Maintenance",
     short:
       "Responsive technical support that keeps your people productive and your business moving.",
     description:

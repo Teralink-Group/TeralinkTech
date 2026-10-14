@@ -533,7 +533,7 @@ button {
 .hero {
   position: relative;
   overflow: hidden;
-  padding: 88px 0 94px;
+  padding: 140px 0 94px;
   background: var(--surface);
 }
 .hero:before {
@@ -809,7 +809,7 @@ button {
 .visual-label {
   position: absolute;
   right: 20px;
-  bottom: 95px;
+  bottom: 50px;
   left: 20px;
   display: flex;
   flex-direction: column;
@@ -1302,7 +1302,7 @@ button {
   padding-bottom: 55px;
 }
 .footer-brand img {
-  width: 110px;
+  width: 135px;
   height: auto;
   object-fit: contain;
   object-position: left;
@@ -1387,7 +1387,7 @@ button {
 .page-hero {
   position: relative;
   overflow: hidden;
-  padding: 76px 0 72px;
+  padding: 125px 0 72px;
   background: var(--surface);
 }
 .page-hero:after {
@@ -2015,17 +2015,17 @@ button {
 
   .service-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
+    gap: 30px;
   }
   .service-card {
     min-height: 250px;
     padding: 19px 16px;
   }
   .service-card h3 {
-    font-size: 14px;
+    font-size: 16px;
   }
   .service-card p {
-    font-size: 12px;
+    font-size: 14px;
   }
 
   .proof-grid {
@@ -2157,7 +2157,7 @@ button {
     right: 8%;
   }
   .visual-label {
-    bottom: 91px;
+    bottom: 50px;
   }
   .visual-label strong {
     font-size: 19px;

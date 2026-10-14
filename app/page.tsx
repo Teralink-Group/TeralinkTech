@@ -108,14 +108,14 @@ export default function Home() {
                 </span>
               </div>
 
-              <div className="system-status">
+              {/* <div className="system-status">
                 <span className="status-indicator" />
                 <div>
                   <small>Infrastructure status</small>
                   <strong>All systems connected</strong>
                 </div>
                 <span className="status-check">✓</span>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -149,7 +149,7 @@ export default function Home() {
             description="From everyday support to the systems behind your operations, bring your technology needs together with one experienced partner."
           />
           <div className="service-grid">
-            {services.map((s, i) => (
+            {services.slice(0, 8).map((s, i) => (
               <ServiceCard key={s.slug} service={s} index={i} />
             ))}
           </div>

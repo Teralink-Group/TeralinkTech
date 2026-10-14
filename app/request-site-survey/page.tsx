@@ -14,6 +14,7 @@ import {
   ShieldCheck,
   Video,
 } from "lucide-react";
+import { submitEnquiry } from "@/lib/submit-enquiry";
 
 const services = [
   "IT Support & Annual Maintenance (AMC)",
@@ -30,10 +31,16 @@ const services = [
   "Other / Not Sure Yet",
 ];
 
+const inputClass =
+  "mt-2 w-full rounded-xl border border-[#dcebe7] bg-white px-4 py-3 text-sm text-[#163d3a] outline-none transition placeholder:text-[#9aadaa] focus:border-[#008276] focus:ring-4 focus:ring-[#008276]/10";
+
+const labelClass = "text-sm font-semibold text-[#163d3a]";
+
 export default function RequestSiteSurveyPage() {
   const [submitted, setSubmitted] = useState(false);
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [formError, setFormError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   function toggleService(service: string) {
     setSelectedServices((current) =>
@@ -43,26 +50,43 @@ export default function RequestSiteSurveyPage() {
     );
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    if (isSubmitting) return;
+
     setFormError("");
+    setSubmitted(false);
 
     if (selectedServices.length === 0) {
       setFormError("Please select at least one service requirement.");
       return;
     }
 
-    // Connect your API/email handler here before production.
-    setFormError(
-      "The form is ready for integration. Connect your submission API to send this request to Teralink."
-    );
+    const form = event.currentTarget;
+    setIsSubmitting(true);
+
+    try {
+      await submitEnquiry(form, "site-survey");
+
+      setSubmitted(true);
+      setFormError(
+        "Thank you! Your site survey request has been submitted successfully. Our team will review your requirements and contact you about the next steps."
+      );
+
+      form.reset();
+      setSelectedServices([]);
+    } catch (error) {
+      setSubmitted(false);
+      setFormError(
+        error instanceof Error
+          ? error.message
+          : "We could not submit your request. Please try again."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   }
-
-  const inputClass =
-    "mt-2 w-full rounded-xl border border-[#dcebe7] bg-white px-4 py-3 text-sm text-[#163d3a] outline-none transition placeholder:text-[#9aadaa] focus:border-[#008276] focus:ring-4 focus:ring-[#008276]/10";
-
-  const labelClass =
-    "text-sm font-semibold text-[#163d3a]";
 
   return (
     <main className="min-h-screen bg-[#f7fbfa] text-[#163d3a]">
@@ -71,7 +95,7 @@ export default function RequestSiteSurveyPage() {
         <div className="absolute -right-24 -top-24 h-80 w-80 rounded-full bg-[#00a79a]/20 blur-3xl" />
         <div className="absolute -bottom-28 left-10 h-64 w-64 rounded-full bg-[#008276]/20 blur-3xl" />
 
-        <div className="relative mx-auto grid container items-center gap-12 py-16 sm:py-20 lg:grid-cols-[1.1fr_0.9fr] lg:py-24">
+        <div className="relative container mx-auto grid items-center gap-12 py-16 sm:py-20 lg:grid-cols-[1.1fr_0.9fr] lg:pt-36">
           <div>
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-teal-100">
               <MapPin size={15} />
@@ -164,6 +188,7 @@ export default function RequestSiteSurveyPage() {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-8">
+            {/* 01. Contact details */}
             <fieldset>
               <legend className="text-lg font-bold text-[#003c3c]">
                 01. Contact details
@@ -215,23 +240,12 @@ export default function RequestSiteSurveyPage() {
                     placeholder="Your phone number"
                   />
                 </label>
-
-                <label className={`${labelClass} sm:col-span-2`}>
-                  Your role
-                  <select name="role" className={inputClass} defaultValue="">
-                    <option value="">Select your role</option>
-                    <option>Business owner / Director</option>
-                    <option>IT Manager / Administrator</option>
-                    <option>Operations / Facilities Manager</option>
-                    <option>Procurement</option>
-                    <option>Other</option>
-                  </select>
-                </label>
               </div>
             </fieldset>
 
             <div className="border-t border-[#e7f0ee]" />
 
+            {/* 02. Site information */}
             <fieldset>
               <legend className="text-lg font-bold text-[#003c3c]">
                 02. Site information
@@ -307,6 +321,7 @@ export default function RequestSiteSurveyPage() {
 
             <div className="border-t border-[#e7f0ee]" />
 
+            {/* 03. Services required */}
             <fieldset>
               <legend className="text-lg font-bold text-[#003c3c]">
                 03. Services required *
@@ -330,6 +345,8 @@ export default function RequestSiteSurveyPage() {
                     >
                       <input
                         type="checkbox"
+                        name="services"
+                        value={service}
                         checked={checked}
                         onChange={() => toggleService(service)}
                         className="mt-1 h-4 w-4 shrink-0 accent-[#008276]"
@@ -345,6 +362,7 @@ export default function RequestSiteSurveyPage() {
 
             <div className="border-t border-[#e7f0ee]" />
 
+            {/* 04. Survey preferences */}
             <fieldset>
               <legend className="text-lg font-bold text-[#003c3c]">
                 04. Survey preferences
@@ -423,6 +441,7 @@ export default function RequestSiteSurveyPage() {
               <input
                 name="privacyConsent"
                 type="checkbox"
+                value="true"
                 required
                 className="mt-1 h-4 w-4 shrink-0 accent-[#008276]"
               />
@@ -442,11 +461,12 @@ export default function RequestSiteSurveyPage() {
 
             {formError && (
               <p
-                role="status"
+                role={submitted ? "status" : "alert"}
+                aria-live="polite"
                 className={`rounded-xl border p-4 text-sm leading-6 ${
                   submitted
                     ? "border-[#b9dfd7] bg-[#f0faf7] text-[#005c52]"
-                    : "border-amber-200 bg-amber-50 text-amber-800"
+                    : "border-red-200 bg-red-50 text-red-700"
                 }`}
               >
                 {formError}
@@ -455,10 +475,11 @@ export default function RequestSiteSurveyPage() {
 
             <button
               type="submit"
-              className="inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-xl bg-[#003c3c] px-6 py-4 text-sm font-bold text-white shadow-[0_8px_24px_rgba(0,60,60,0.12)] transition hover:-translate-y-0.5 hover:bg-[#008276] focus:outline-none focus:ring-4 focus:ring-[#008276]/20 sm:w-auto sm:min-w-64"
+              disabled={isSubmitting}
+              className="inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-xl bg-[#003c3c] px-6 py-4 text-sm font-bold text-white shadow-[0_8px_24px_rgba(0,60,60,0.12)] transition hover:-translate-y-0.5 hover:bg-[#008276] focus:outline-none focus:ring-4 focus:ring-[#008276]/20 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:min-w-64"
             >
-              Request Site Survey
-              <ArrowRight size={17} />
+              {isSubmitting ? "Submitting request..." : "Request Site Survey"}
+              {!isSubmitting && <ArrowRight size={17} />}
             </button>
 
             <p className="text-xs leading-6 text-[#82938f]">
@@ -475,9 +496,7 @@ export default function RequestSiteSurveyPage() {
               <ClipboardCheck size={23} />
             </span>
 
-            <h2 className="mt-5 text-xl font-bold">
-              What happens next?
-            </h2>
+            <h2 className="mt-5 text-xl font-bold">What happens next?</h2>
 
             <div className="mt-6 space-y-5">
               {[
@@ -526,7 +545,7 @@ export default function RequestSiteSurveyPage() {
               requirements directly to our quotation team.
             </p>
             <Link
-              href="/request-quotation"
+              href="/request-a-quotation"
               className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-[#008276] transition hover:text-[#003c3c]"
             >
               Request a quotation
