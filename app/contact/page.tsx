@@ -231,7 +231,7 @@ export default function Contact() {
                 </Link>
 
                 <Link
-                  href="/request-quotation"
+                  href="/request-a-quotation"
                   className="inline-flex items-center gap-2 text-sm font-semibold text-[#008276] transition hover:text-[#003c3c]"
                 >
                   Request a quotation
