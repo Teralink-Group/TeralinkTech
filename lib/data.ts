@@ -24,7 +24,7 @@ export type Service = {
 export const services: Service[] = [
   {
     slug: "it-support-maintenance",
-    title: "IT Support & Annual Maintenance",
+    title: "IT Support & Annual Maintenance(AMC)",
     short:
       "Responsive technical support that keeps your people productive and your business moving.",
     description:
@@ -58,26 +58,30 @@ export const services: Service[] = [
     outcome:
       "Consistent connectivity and a network foundation that can scale with your business.",
   },
-  {
-    slug: "cybersecurity-solutions",
-    title: "Cybersecurity & Firewall Management",
-    short:
-      "Protect your business with managed firewalls, secure remote access and practical security assessments.",
-    description:
-      "Strengthen your organisation's security posture with layered protection for users, devices, email and network infrastructure. We help businesses configure and manage firewalls, establish secure VPN connections, implement multi-factor authentication (MFA), improve Microsoft 365 security and conduct IT security assessments to identify potential risks and recommend appropriate safeguards.",
-    icon: ShieldCheck,
-    points: [
-      "Firewall installation, configuration and management",
-      "VPN setup and secure remote access",
-      "Multi-factor authentication (MFA) implementation",
-      "Microsoft 365 security configuration and reviews",
-      "Endpoint protection and business email security",
-      "IT security audits and vulnerability assessments",
-      "Security policy reviews and best-practice recommendations",
-    ],
-    outcome:
-      "Improved security visibility, stronger access controls and a more resilient business IT environment.",
-  },
+  
+{
+  slug: "cybersecurity-solutions",
+  title: "Cybersecurity & Firewall Management",
+  short:
+    "Protect your business with managed firewalls, secure remote access and practical security assessments.",
+  description:
+    "Strengthen your organisation's security posture with layered protection for users, devices, email and network infrastructure. We help businesses configure and manage firewalls, establish secure VPN connections, implement multi-factor authentication (MFA), improve Microsoft 365 security and conduct IT security assessments to identify potential risks and recommend appropriate safeguards. Where included in the agreed scope, services can also cover site-to-site VPN connectivity and network segmentation to help secure communication between offices and isolate network environments.",
+  icon: ShieldCheck,
+  points: [
+    "Firewall installation, configuration and management",
+    "VPN setup and secure remote access",
+    "Site-to-site VPN configuration, where offered",
+    "Network segmentation and access controls, where offered",
+    "Multi-factor authentication (MFA) implementation",
+    "Microsoft 365 security configuration and reviews",
+    "Endpoint protection and business email security",
+    "IT security audits and vulnerability assessments",
+    "Security policy reviews and best-practice recommendations",
+  ],
+  outcome:
+    "Improved security visibility, stronger access controls and a more resilient business IT environment, tailored to your organisation's security requirements.",
+},
+
 
   {
     slug: "cloud-microsoft-365",
@@ -96,6 +100,7 @@ export const services: Service[] = [
       "Microsoft 365 tenant administration",
       "User accounts, licences and mailbox management",
       "Security settings, access controls and ongoing support",
+      "Microsoft 365 data backup and recovery",
     ],
     outcome:
       "A properly managed Microsoft 365 environment that supports secure collaboration, business communication and everyday productivity.",
@@ -198,13 +203,15 @@ export const services: Service[] = [
     short:
       "Organised copper and fiber connectivity for reliable office networks and IT infrastructure.",
     description:
-      "Build a dependable physical network foundation with structured cabling and fiber optic solutions. We support cabling planning, installation, termination, rack organisation and testing to help businesses establish organised, maintainable connectivity.",
+      "Build a dependable physical network foundation with structured cabling and fiber optic solutions. Depending on project requirements, services can include Cat6/Cat6A cabling, installation, termination, rack organisation, cable testing and test reports to help businesses establish organised, maintainable connectivity.",
     icon: Cable,
     points: [
       "Structured network cabling installation",
+      "Cat6 and Cat6A copper cabling",
       "Fiber optic cabling and connectivity",
       "Patch panel and network rack organisation",
       "Cable routing, termination and labelling",
+      "Cable testing and test reports, where available",
       "Network cabling testing and troubleshooting",
       "New office and infrastructure expansion cabling",
     ],
@@ -217,13 +224,15 @@ export const services: Service[] = [
     short:
       "Business communication systems configured around your teams, extensions and calling requirements.",
     description:
-      "Implement business telephony and IP-based communication systems to help teams communicate across offices and locations. We support IP PABX and VoIP setup, extension configuration, call routing and integration with suitable network infrastructure.",
+      "Implement business telephony and IP-based communication systems to help teams communicate across offices and locations. Depending on your requirements and service scope, solutions can include IP PABX and VoIP setup, extension configuration, call routing, IP phone supply and SIP trunk setup.",
     icon: PhoneCall,
     points: [
       "IP telephony and VoIP deployment",
       "PABX and IP PBX setup and configuration",
       "Telephone extension creation and management",
       "Call routing and business calling configuration",
+      "IP phone supply and installation",
+      "SIP trunk setup",
       "Network readiness for voice communications",
       "Telephony troubleshooting and ongoing support",
     ],

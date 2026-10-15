@@ -1635,6 +1635,79 @@ button {
   }
 }
 
+/* Teralink approach section */
+.approach-section {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  align-items: center;
+  gap: clamp(40px, 6vw, 88px);
+}
+
+.approach-visual {
+  position: relative;
+  min-height: 440px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding: clamp(28px, 4vw, 44px);
+  border-radius: 12px;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0, 35, 34, 0.05) 10%,
+      rgba(0, 35, 34, 0.92) 100%
+    ),
+    url("/images/teralink-approach.png") center / cover no-repeat;
+  isolation: isolate;
+}
+
+.approach-visual-overlay {
+  position: relative;
+  z-index: 1;
+  max-width: 390px;
+  color: #ffffff;
+}
+
+.approach-visual-eyebrow {
+  display: inline-block;
+  margin-bottom: 16px;
+  color: #7de8d4;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.approach-visual-overlay h3 {
+  margin: 0 0 14px;
+  color: #ffffff;
+  font-size: clamp(26px, 2.5vw, 34px);
+  line-height: 1.2;
+  letter-spacing: -0.035em;
+}
+
+.approach-visual-overlay p {
+  margin: 0;
+  max-width: 350px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.approach-content {
+  min-width: 0;
+}
+
+.approach-content .feature-list {
+  margin-top: 28px;
+}
+
+.approach-content > .text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 26px;
+}
+
 /* ---------- 11. Responsive ---------- */
 
 /* Compact desktop / tablet landscape */
@@ -1944,6 +2017,14 @@ button {
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
   }
+  .approach-section {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .approach-visual {
+    min-height: 340px;
+  }
 }
 
 /* Mobile */
@@ -2128,6 +2209,14 @@ button {
 
     width: 100%;
 }
+.approach-visual {
+    min-height: 300px;
+    padding: 24px;
+  }
+
+  .approach-section {
+    gap: 30px;
+  }
 }
 
 /* Hero visual on small screens */

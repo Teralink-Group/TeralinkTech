@@ -160,43 +160,56 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="section section-soft">
-        <div className="container split-section">
-          <div className="editorial-visual">
-            <div className="visual-copy">
-              <span>THE TERALINK APPROACH</span>
-              <h3>Technology should make work simpler.</h3>
-              <p>
-                We bring the right people, systems and support together to help
-                your organisation operate with confidence.
-              </p>
+     
+<section className="section section-soft">
+  <div className="container split-section approach-section">
+    {/* Left visual */}
+    <div className="approach-visual">
+      <div className="approach-visual-overlay">
+        <span className="approach-visual-eyebrow">
+          THE TERALINK APPROACH
+        </span>
+
+        <h3>Technology that works for your business.</h3>
+
+        <p>
+          Reliable IT, practical security and the right support
+          to help your organisation move forward with confidence.
+        </p>
+      </div>
+    </div>
+
+    {/* Right content */}
+    <div className="approach-content">
+      <SectionHeading
+        eyebrow="WHY TERALINK"
+        title="A thoughtful approach to business technology."
+        description="Good IT is more than equipment and software. It is the confidence that your systems, people and processes are working together."
+      />
+
+      <div className="feature-list">
+        {benefits.map((b) => (
+          <div className="feature-item" key={b.title}>
+            <span className="feature-check">
+              <Check size={13} />
+            </span>
+
+            <div>
+              <strong>{b.title}</strong>
+              <p>{b.desc}</p>
             </div>
           </div>
-          <div>
-            <SectionHeading
-              eyebrow="WHY TERALINK"
-              title="A thoughtful approach to business technology."
-              description="Good IT is more than equipment and software. It is the confidence that your systems, people and processes are working together."
-            />
-            <div className="feature-list">
-              {benefits.map((b) => (
-                <div className="feature-item" key={b.title}>
-                  <span className="feature-check">
-                    <Check size={13} />
-                  </span>
-                  <div>
-                    <strong>{b.title}</strong>
-                    <p>{b.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <Link href="/about" className="text-link">
-              Get to know Teralink <ArrowUpRight size={16} />
-            </Link>
-          </div>
-        </div>
-      </section>
+        ))}
+      </div>
+
+      <Link href="/about" className="text-link">
+        Get to know Teralink
+        <ArrowUpRight size={16} />
+      </Link>
+    </div>
+  </div>
+</section>
+
       <section className="section">
         <div className="container">
           <SectionHeading
