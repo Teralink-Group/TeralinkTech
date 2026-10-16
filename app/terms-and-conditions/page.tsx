@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Terms & Conditions",
+  title: "Terms & Condition",
   description:
     "Read the Terms and Conditions governing the use of the Teralink Technical Solutions website, enquiries, quotations and IT services.",
   alternates: {
