@@ -125,22 +125,25 @@ export const services: Service[] = [
       "An organised and dependable infrastructure built around your operational needs.",
   },
   {
-    slug: "data-backup-recovery",
-    title: "Data Backup & Recovery",
+    slug: "call-center-solutions",
+    title: "Call Center & Contact Center Solutions",
     short:
-      "Protect business-critical information with planned backup and recovery solutions.",
+      "Smart, Reliable & Scalable Communication Solutions for Your Business",
     description:
-      "A clear backup strategy helps your business prepare for accidental deletion, hardware failure and unexpected disruption. We implement practical backup routines and recovery planning so your data has a path back when it matters.",
-    icon: DatabaseBackup,
-    points: [
-      "Automated backup solution setup",
-      "Backup monitoring and verification",
-      "Data recovery assistance",
-      "Disaster recovery planning",
-      "Retention and recovery policy guidance",
-    ],
+      "Teralink Technical Solutions provides professional call center and contact center solutions to help businesses improve customer communication, manage incoming and outgoing calls, and enhance operational efficiency.",
+     icon: Headset,
+  points: [
+    "Inbound and outbound call management solutions",
+    "Call routing and queue configuration",
+    "Interactive Voice Response (IVR) setup, where supported",
+    "Agent extensions and call distribution configuration",
+    "IP telephony, PABX and VoIP integration",
+    "Call monitoring and reporting capabilities, where supported",
+    "Contact center infrastructure setup and configuration",
+    "System troubleshooting and ongoing technical support",
+  ],
     outcome:
-      "Greater confidence that important business information can be restored when required.",
+      "A reliable and scalable business communication environment that helps teams manage customer calls efficiently and deliver a more consistent customer experience.",
   },
   {
     slug: "it-equipment-supply-installation",

@@ -363,21 +363,21 @@ export default function Header() {
             <div className="flex items-center gap-3">
               {/* Desktop CTA */}
               <Link
-                href="/request-site-survey"
-                className="hidden h-11 items-center gap-2 rounded-lg border px-5 text-[12px] font-bold text-[#163d3a] shadow-[0_6px_18px_rgba(0,60,60,0.12)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#00674F]
+                href="/request-quote-&-survey"
+                className="hidden h-11 bg-[#00674F] items-center gap-2 rounded-lg border px-5 text-[12px] font-bold text-white shadow-[0_6px_18px_rgba(0,60,60,0.12)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#00674F]
  hover:text-[#fff] lg:inline-flex"
               >
-                Request a Site Survey
+                Request Quote & Survey
                 <ArrowUpRight size={15} />
               </Link>
 
-              <Link
+              {/* <Link
                 href="/request-a-quotation"
                 className="hidden h-11 items-center gap-2 rounded-lg bg-[#00674F] px-5 text-[12px] font-bold text-white shadow-[0_6px_18px_rgba(0,60,60,0.12)] transition-all duration-200 hover:-translate-y-0.5 lg:inline-flex"
               >
                 Request a Quotation
                 <ArrowUpRight size={15} />
-              </Link>
+              </Link> */}
 
               {/* Mobile menu button */}
 
@@ -545,8 +545,15 @@ export default function Header() {
             {/* =================================================
                 MOBILE CTA
             ================================================= */}
-
-             <Link
+            <Link
+              href="/request-quote-&-survey"
+              onClick={closeMobile}
+              className="mt-5 flex min-h-[52px] w-full items-center justify-center gap-2 rounded-xl bg-[#003c3c] px-5 text-[13px] font-bold text-white shadow-[0_8px_24px_rgba(0,60,60,0.12)] transition-all duration-200 hover:bg-[#008276]"
+            >
+              Request Quote & Survey
+              <ArrowUpRight size={15} />
+            </Link>
+            {/* <Link
                 href="/request-site-survey"
                 onClick={closeMobile}
                 className="mt-5 flex min-h-[52px] w-full border items-center justify-center gap-2 rounded-xl bg-[#fff] px-5 text-[#163d3a] text-[13px] font-bold shadow-[0_6px_18px_rgba(0,60,60,0.12)] transition-all duration-200 hover:bg-[#00674F]"
@@ -562,7 +569,7 @@ export default function Header() {
             >
               Request a Quotation
               <ArrowUpRight size={17} />
-            </Link>
+            </Link> */}
 
             {/* =================================================
                 MOBILE FOOTER

@@ -211,7 +211,7 @@ export default function Contact() {
             </div>
 
             {/* Dedicated forms */}
-            <div className="mt-6 rounded-xl border border-[#dcebe7] p-5">
+            {/* <div className="mt-6 rounded-xl border border-[#dcebe7] p-5">
               <h3 className="font-bold text-[#003c3c]">
                 Prefer a dedicated request?
               </h3>
@@ -238,7 +238,7 @@ export default function Contact() {
                   <ArrowUpRight size={16} />
                 </Link>
               </div>
-            </div>
+            </div> */}
           </div>
 
           {/* Right: functional contact form */}
