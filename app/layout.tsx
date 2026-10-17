@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { DM_Sans } from "next/font/google";
+import WhatsAppButton from "@/components/WhatsAppButton";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -43,6 +44,7 @@ export default function RootLayout({
         <Header />
         <main>{children}</main>
         <Footer />
+         <WhatsAppButton />
       </body>
     </html>
   );

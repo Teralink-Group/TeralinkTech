@@ -41,16 +41,47 @@ const budgetOptions = [
   "Above AED 25,000",
 ];
 
+const timelineOptions = [
+  "As soon as possible",
+  "Within 2–4 weeks",
+  "Within 1–3 months",
+  "More than 3 months",
+  "Still planning",
+];
+
 const inputClass =
   "mt-2 w-full rounded-xl border border-[#dcebe7] bg-white px-4 py-3 text-sm text-[#163d3a] outline-none transition placeholder:text-[#9aadaa] focus:border-[#008276] focus:ring-4 focus:ring-[#008276]/10";
 
 const labelClass = "text-sm font-semibold text-[#163d3a]";
 
+const steps = [
+  {
+    number: "01",
+    title: "Share your requirements",
+    text: "Tell us about your business, IT requirements, project scope and budget.",
+  },
+  {
+    number: "02",
+    title: "Initial review",
+    text: "Our team reviews your enquiry and clarifies your requirements, priorities and scope.",
+  },
+  {
+    number: "03",
+    title: "Plan your project",
+    text: "Where required, we coordinate a suitable date for an on-site assessment based on availability.",
+  },
+  {
+    number: "04",
+    title: "Receive your next steps",
+    text: "We discuss suitable solutions, recommendations and a tailored quotation based on your requirements.",
+  },
+];
+
 export default function RequestSiteSurveyPage() {
-  const [submitted, setSubmitted] = useState(false);
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [formError, setFormError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   function toggleService(service: string) {
     setSelectedServices((current) =>
@@ -77,11 +108,13 @@ export default function RequestSiteSurveyPage() {
     setIsSubmitting(true);
 
     try {
-      await submitEnquiry(form, "site-survey");
+      // The form includes contact details, site information,
+      // selected services and project requirements.
+      await submitEnquiry(form, "request-quote-&-survey");
 
       setSubmitted(true);
       setFormError(
-        "Thank you! Your site survey request has been submitted successfully. Our team will review your requirements and contact you about the next steps."
+        "Thank you! Your quote and site survey request has been submitted successfully. Our team will review your requirements and contact you about the next steps."
       );
 
       form.reset();
@@ -105,20 +138,26 @@ export default function RequestSiteSurveyPage() {
         <div className="absolute -right-24 -top-24 h-80 w-80 rounded-full bg-[#00a79a]/20 blur-3xl" />
         <div className="absolute -bottom-28 left-10 h-64 w-64 rounded-full bg-[#008276]/20 blur-3xl" />
 
-        <div className="relative container mx-auto grid items-center gap-12 py-16 sm:py-20 lg:grid-cols-[1.1fr_0.9fr] lg:pt-36">
+        <div className="relative container mx-auto grid items-center gap-12 px-5 py-16 sm:px-8 sm:py-20 lg:grid-cols-[1.1fr_0.9fr] lg:pt-36">
           <div>
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-teal-100">
               <MapPin size={15} />
-              IT SOLUTIONS & PROJECT ASSESSMENT
+              IT Solutions & Project Assessment
             </div>
 
             <h1 className="max-w-2xl text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
-              Request a 
-              <span className="text-[#70d8cd]"> Quote & Site Survey</span>
+              Request a{" "}
+              <span className="text-[#70d8cd]">
+                Quote & Site Survey
+              </span>
             </h1>
 
             <p className="mt-6 max-w-xl text-base leading-8 text-teal-50/80 sm:text-lg">
-              Planning a new office, upgrading your IT infrastructure or strengthening your business security? Share your requirements with Teralink Technical Solutions to receive a tailored quotation and arrange an on-site assessment when needed.
+              Planning a new office, upgrading your IT infrastructure
+              or strengthening your business security? Share your
+              requirements with Teralink Technical Solutions to receive
+              a tailored quotation and arrange an on-site assessment
+              when needed.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3 text-sm text-white/90">
@@ -166,9 +205,11 @@ export default function RequestSiteSurveyPage() {
                   <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#00a79a]/20 text-[#70d8cd]">
                     <Icon size={21} strokeWidth={1.7} />
                   </span>
+
                   <h2 className="mt-5 text-base font-bold text-white">
                     {item.title}
                   </h2>
+
                   <p className="mt-2 text-xs leading-6 text-teal-50/65 sm:text-sm">
                     {item.text}
                   </p>
@@ -184,19 +225,22 @@ export default function RequestSiteSurveyPage() {
         <div className="rounded-2xl border border-[#dcebe7] bg-white p-5 shadow-[0_12px_45px_rgba(0,60,60,0.05)] sm:p-8 lg:p-10">
           <div className="mb-8 border-b border-[#e7f0ee] pb-6">
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#008276]">
-              Survey enquiry form
+              Quote & Site Survey Enquiry
             </p>
+
             <h2 className="mt-3 text-2xl font-bold tracking-tight text-[#003c3c] sm:text-3xl">
-              Tell us about your site
+              Tell us about your project
             </h2>
+
             <p className="mt-3 text-sm leading-7 text-[#607774]">
-              Share a few details so we can understand your requirements.
-              Fields marked with * are required.
+              Share your contact details, site information, required
+              services and project requirements so our team can prepare
+              a suitable response. Fields marked with * are required.
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-8">
-            {/* 01. Contact details */}
+            {/* Contact details */}
             <fieldset>
               <legend className="text-lg font-bold text-[#003c3c]">
                 01. Contact details
@@ -209,6 +253,7 @@ export default function RequestSiteSurveyPage() {
                     name="name"
                     required
                     autoComplete="name"
+                    maxLength={150}
                     className={inputClass}
                     placeholder="Your full name"
                   />
@@ -220,6 +265,7 @@ export default function RequestSiteSurveyPage() {
                     name="company"
                     required
                     autoComplete="organization"
+                    maxLength={200}
                     className={inputClass}
                     placeholder="Business or organisation"
                   />
@@ -232,6 +278,7 @@ export default function RequestSiteSurveyPage() {
                     type="email"
                     required
                     autoComplete="email"
+                    maxLength={254}
                     className={inputClass}
                     placeholder="you@company.com"
                   />
@@ -244,6 +291,7 @@ export default function RequestSiteSurveyPage() {
                     type="tel"
                     required
                     autoComplete="tel"
+                    maxLength={50}
                     className={inputClass}
                     placeholder="Your phone number"
                   />
@@ -253,7 +301,7 @@ export default function RequestSiteSurveyPage() {
 
             <div className="border-t border-[#e7f0ee]" />
 
-            {/* 02. Site information */}
+            {/* Site information */}
             <fieldset>
               <legend className="text-lg font-bold text-[#003c3c]">
                 02. Site information
@@ -264,6 +312,7 @@ export default function RequestSiteSurveyPage() {
                   Site / building name
                   <input
                     name="siteName"
+                    maxLength={200}
                     className={inputClass}
                     placeholder="Office or building name"
                   />
@@ -274,6 +323,7 @@ export default function RequestSiteSurveyPage() {
                   <input
                     name="city"
                     required
+                    maxLength={150}
                     className={inputClass}
                     placeholder="City"
                   />
@@ -285,22 +335,22 @@ export default function RequestSiteSurveyPage() {
                     name="address"
                     required
                     rows={3}
+                    maxLength={3000}
                     className={`${inputClass} resize-y`}
                     placeholder="Street address, area, city and postcode"
                   />
                 </label>
-
-               
               </div>
             </fieldset>
 
             <div className="border-t border-[#e7f0ee]" />
 
-            {/* 03. Services required */}
+            {/* Services */}
             <fieldset>
               <legend className="text-lg font-bold text-[#003c3c]">
                 03. Services required *
               </legend>
+
               <p className="mt-2 text-sm leading-6 text-[#607774]">
                 Select all areas you would like us to assess.
               </p>
@@ -337,11 +387,41 @@ export default function RequestSiteSurveyPage() {
 
             <div className="border-t border-[#e7f0ee]" />
 
-            {/* 04. Survey preferences */}
+            {/* Project details */}
+            <fieldset>
+              <legend className="text-lg font-bold text-[#003c3c]">
+                04. Project details
+              </legend>
+
+              <div className="mt-5 grid gap-5 sm:grid-cols-2">
+               
+
+                <label className={`${labelClass} sm:col-span-2`}>
+                  Project / equipment requirements *
+                  <textarea
+                    name="requirements"
+                    required
+                    rows={6}
+                    maxLength={5000}
+                    className={`${inputClass} resize-y`}
+                    placeholder="Describe your requirements, equipment quantities, existing setup, number of locations, preferred brands or any specific technical needs."
+                  />
+                </label>
+              </div>
+            </fieldset>
+
+            <div className="border-t border-[#e7f0ee]" />
+
+            {/* Site survey preferences */}
             {/* <fieldset>
               <legend className="text-lg font-bold text-[#003c3c]">
-                04. Survey preferences
+                05. Site survey preferences
               </legend>
+
+              <p className="mt-2 text-sm leading-6 text-[#607774]">
+                If an on-site assessment is needed, share your preferences.
+                Any appointment will be confirmed by our team.
+              </p>
 
               <div className="mt-5 grid gap-5 sm:grid-cols-2">
                 <label className={labelClass}>
@@ -368,137 +448,36 @@ export default function RequestSiteSurveyPage() {
                   </select>
                 </label>
 
-                <label className={labelClass}>
-                  Project stage
-                  <select
-                    name="projectStage"
-                    defaultValue=""
-                    className={inputClass}
-                  >
-                    <option value="">Select project stage</option>
-                    <option>Planning a new office</option>
-                    <option>Upgrading existing infrastructure</option>
-                    <option>Resolving an existing issue</option>
-                    <option>Expanding to another location</option>
-                    <option>Requesting a general assessment</option>
-                  </select>
-                </label>
-
-                <label className={labelClass}>
-                  Expected timeline
-                  <select
-                    name="timeline"
-                    defaultValue=""
-                    className={inputClass}
-                  >
-                    <option value="">Select timeline</option>
-                    <option>As soon as possible</option>
-                    <option>Within 2–4 weeks</option>
-                    <option>Within 1–3 months</option>
-                    <option>More than 3 months</option>
-                    <option>Still planning</option>
-                  </select>
-                </label>
-
                 <label className={`${labelClass} sm:col-span-2`}>
-                  Describe your requirements
+                  Additional notes
                   <textarea
-                    name="requirements"
-                    rows={5}
+                    name="surveyNotes"
+                    rows={3}
+                    maxLength={3000}
                     className={`${inputClass} resize-y`}
-                    placeholder="Tell us about the current setup, issues, number of users, equipment or project goals."
+                    placeholder="Access instructions, site availability or any additional information."
                   />
                 </label>
               </div>
             </fieldset> */}
 
-            {/* Project details */}
-            <fieldset>
-              <legend className="text-lg font-bold text-[#003c3c]">
-                04. Project details
-              </legend>
+            {/* Spam honeypot */}
+            <div
+              aria-hidden="true"
+              className="absolute left-[-9999px] h-px w-px overflow-hidden"
+            >
+              <label>
+                Leave this field empty
+                <input
+                  name="website"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+              </label>
+            </div>
 
-              <div className="mt-5 grid gap-5 sm:grid-cols-2">
-                <label className={labelClass}>
-                  Project type
-                  <select
-                    name="projectType"
-                    defaultValue=""
-                    className={inputClass}
-                  >
-                    <option value="">Select project type</option>
-                    <option>New installation / deployment</option>
-                    <option>Upgrade / replacement</option>
-                    <option>Ongoing IT support / AMC</option>
-                    <option>Equipment procurement</option>
-                    <option>Migration / relocation</option>
-                    <option>Consultation / assessment</option>
-                    <option>Other</option>
-                  </select>
-                </label>
-
-                <label className={labelClass}>
-                  Number of users / workstations
-                  <select
-                    name="users"
-                    defaultValue=""
-                    className={inputClass}
-                  >
-                    <option value="">Select approximate size</option>
-                    <option>1–10</option>
-                    <option>11–25</option>
-                    <option>26–50</option>
-                    <option>51–100</option>
-                    <option>101–250</option>
-                    <option>250+</option>
-                    <option>Not applicable / unsure</option>
-                  </select>
-                </label>
-
-                <label className={labelClass}>
-                  Estimated budget
-                  <select
-                    name="budget"
-                    defaultValue=""
-                    className={inputClass}
-                  >
-                    {budgetOptions.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-
-                <label className={labelClass}>
-                  Preferred implementation timeline
-                  <select
-                    name="timeline"
-                    defaultValue=""
-                    className={inputClass}
-                  >
-                    <option value="">Select timeline</option>
-                    <option>As soon as possible</option>
-                    <option>Within 2–4 weeks</option>
-                    <option>Within 1–3 months</option>
-                    <option>More than 3 months</option>
-                    <option>Still planning</option>
-                  </select>
-                </label>
-
-                <label className={`${labelClass} sm:col-span-2`}>
-                  Project / equipment requirements *
-                  <textarea
-                    name="requirements"
-                    required
-                    rows={6}
-                    className={`${inputClass} resize-y`}
-                    placeholder="Describe your requirements, equipment quantities, existing setup, number of locations, preferred brands or any specific technical needs."
-                  />
-                </label>
-              </div>
-            </fieldset>
-
+            {/* Privacy consent */}
             <label className="flex items-start gap-3 text-sm leading-6 text-[#607774]">
               <input
                 name="privacyConsent"
@@ -509,8 +488,8 @@ export default function RequestSiteSurveyPage() {
               />
               <span>
                 I agree that Teralink Technical Solutions may use the
-                information provided to respond to my enquiry, in accordance
-                with its{" "}
+                information provided to respond to my enquiry, in
+                accordance with its{" "}
                 <Link
                   href="/privacy-policy"
                   className="font-semibold text-[#008276] underline underline-offset-4"
@@ -538,15 +517,17 @@ export default function RequestSiteSurveyPage() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="inline-flex cursor-pointer min-h-14 w-full items-center justify-center gap-3 rounded-xl bg-[#003c3c] px-6 py-4 text-sm font-bold text-white shadow-[0_8px_24px_rgba(0,60,60,0.12)] transition hover:-translate-y-0.5 hover:bg-[#008276] focus:outline-none focus:ring-4 focus:ring-[#008276]/20 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:min-w-64"
+              className="inline-flex min-h-14 w-full cursor-pointer items-center justify-center gap-3 rounded-xl bg-[#003c3c] px-6 py-4 text-sm font-bold text-white shadow-[0_8px_24px_rgba(0,60,60,0.12)] transition hover:-translate-y-0.5 hover:bg-[#008276] focus:outline-none focus:ring-4 focus:ring-[#008276]/20 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:min-w-64"
             >
-              {isSubmitting ? "Submitting request..." : "Submit"}
+              {isSubmitting
+                ? "Submitting request..."
+                : "Submit Quote & Survey Request"}
               {!isSubmitting && <ArrowRight size={17} />}
             </button>
 
             <p className="text-xs leading-6 text-[#82938f]">
-              Submitting a request does not confirm an appointment. Our team
-              will need to review the enquiry and confirm the next steps.
+              Submitting a request does not confirm an appointment.
+              Our team will review your enquiry and confirm the next steps.
             </p>
           </form>
         </div>
@@ -558,38 +539,20 @@ export default function RequestSiteSurveyPage() {
               <ClipboardCheck size={23} />
             </span>
 
-            <h2 className="mt-5 text-xl font-bold">What happens next?</h2>
+            <h2 className="mt-5 text-xl font-bold">
+              What happens next?
+            </h2>
 
             <div className="mt-6 space-y-5">
-              {[
-                {
-                  number: "01",
-                  title: "Share your requirements",
-                  text: "Tell us about your business, IT requirements, project scope and budget.",
-                },
-                {
-                  number: "02",
-                  title: "Initial review",
-                  text: "Our team reviews your enquiry and clarifies your requirements, priorities and scope.",
-                },
-                {
-                  number: "03",
-                  title: "Plan your project",
-                  text: "Where required, we coordinate a suitable date for an on-site assessment based on availability.",
-                },
-                {
-                  number: "04",
-                  title: "Receive your next steps",
-                  text: "We discuss suitable solutions, recommendations and a tailored quotation based on your requirements.",
-                },
-              ].map((step) => (
+              {steps.map((step) => (
                 <div key={step.number} className="flex gap-4">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/15 bg-white/5 text-xs font-bold text-[#70d8cd]">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/15 bg-white/5 text-xs font-bold text-[#70d8cd]">
                     {step.number}
                   </span>
+
                   <div>
                     <h3 className="text-sm font-bold">{step.title}</h3>
-                    <p className="mt-1 text-xs leading-6 text-teal-50/65">
+                    <p className="mt-1 text-xs leading-6 text-teal-50/70">
                       {step.text}
                     </p>
                   </div>
@@ -598,31 +561,14 @@ export default function RequestSiteSurveyPage() {
             </div>
           </div>
 
-          {/* <div className="rounded-2xl border border-[#dcebe7] bg-white p-6">
-            <h2 className="text-lg font-bold text-[#003c3c]">
-              Need a quotation instead?
-            </h2>
-            <p className="mt-3 text-sm leading-7 text-[#607774]">
-              If you already know what you need, send your project
-              requirements directly to our quotation team.
-            </p>
-            <Link
-              href="/request-a-quotation"
-              className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-[#008276] transition hover:text-[#003c3c]"
-            >
-              Request a quotation
-              <ArrowRight size={16} />
-            </Link>
-          </div> */}
-
           <div className="rounded-2xl border border-[#dcebe7] bg-white p-6">
             <CheckCircle2 size={22} className="text-[#008276]" />
             <h2 className="mt-3 text-base font-bold text-[#003c3c]">
               Clear project requirements
             </h2>
             <p className="mt-2 text-sm leading-7 text-[#607774]">
-              Providing accurate site information helps us understand your
-              needs before discussing the appropriate solution.
+              Providing accurate contact, site and project information
+              helps us understand your needs before discussing a solution.
             </p>
           </div>
         </aside>

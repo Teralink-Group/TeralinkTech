@@ -211,34 +211,25 @@ export default function Contact() {
             </div>
 
             {/* Dedicated forms */}
-            {/* <div className="mt-6 rounded-xl border border-[#dcebe7] p-5">
-              <h3 className="font-bold text-[#003c3c]">
-                Prefer a dedicated request?
-              </h3>
+            
+<div className="mt-6 rounded-xl border border-[#dcebe7] bg-[#f4faf8] p-5">
+  <h3 className="font-bold text-[#003c3c]">
+    Need a quote or site survey?
+  </h3>
 
-              <p className="mt-2 text-sm leading-6 text-[#607774]">
-                Use one of our dedicated forms if you already know what you
-                need.
-              </p>
+  <p className="mt-2 text-sm leading-6 text-[#607774]">
+    Tell us about your project, request a quotation, or arrange a site assessment.
+  </p>
 
-              <div className="mt-4 flex flex-col items-start gap-3">
-                <Link
-                  href="/request-site-survey"
-                  className="inline-flex items-center gap-2 text-sm font-semibold text-[#008276] transition hover:text-[#003c3c]"
-                >
-                  Request a site survey
-                  <ArrowUpRight size={16} />
-                </Link>
+  <Link
+    href="/request-quote-&-survey"
+    className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#008276] transition hover:text-[#003c3c]"
+  >
+    Request a Quote &amp; Site Survey
+    <ArrowUpRight size={16} />
+  </Link>
+</div>
 
-                <Link
-                  href="/request-a-quotation"
-                  className="inline-flex items-center gap-2 text-sm font-semibold text-[#008276] transition hover:text-[#003c3c]"
-                >
-                  Request a quotation
-                  <ArrowUpRight size={16} />
-                </Link>
-              </div>
-            </div> */}
           </div>
 
           {/* Right: functional contact form */}

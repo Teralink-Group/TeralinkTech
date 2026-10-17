@@ -1,12 +1,21 @@
 
-export type EnquiryFormType = "contact" | "site-survey" | "quotation";
+export type EnquiryFormType =
+  | "contact"
+  | "request-quote-&-survey";
+
+type EnquiryResult = {
+  success: boolean;
+  message: string;
+};
+
+type EnquiryFields = Record<string, string | string[]>;
 
 export async function submitEnquiry(
   form: HTMLFormElement,
   formType: EnquiryFormType
-): Promise<{ success: boolean; message: string }> {
+): Promise<EnquiryResult> {
   const formData = new FormData(form);
-  const fields: Record<string, string | string[]> = {};
+  const fields: EnquiryFields = {};
 
   for (const [key, value] of formData.entries()) {
     if (typeof value !== "string") continue;
@@ -22,32 +31,52 @@ export async function submitEnquiry(
     }
   }
 
-  // Make unchecked privacy checkboxes fail server-side validation.
-  if (!formData.has("privacyConsent")) {
-    fields.privacyConsent = "";
-  } else {
-    fields.privacyConsent = "true";
+  fields.privacyConsent = formData.has("privacyConsent")
+    ? "true"
+    : "";
+
+  if (!formData.has("services")) {
+    fields.services = [];
   }
 
-  const response = await fetch("/api/enquiries", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ formType, fields }),
-  });
+  let response: Response;
 
-  const result = (await response.json().catch(() => ({}))) as {
-    success?: boolean;
-    message?: string;
-  };
+  try {
+    response = await fetch("/api/enquiries", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        formType,
+        fields,
+      }),
+    });
+  } catch {
+    throw new Error(
+      "Unable to connect to the server. Please check your internet connection and try again."
+    );
+  }
 
-  if (!response.ok || !result.success) {
-    throw new Error(result.message || "Unable to submit the form.");
+  let result: Partial<EnquiryResult> = {};
+
+  try {
+    result = (await response.json()) as Partial<EnquiryResult>;
+  } catch {
+    // Handle a response that isn't valid JSON.
+  }
+
+  if (!response.ok || result.success !== true) {
+    throw new Error(
+      result.message ||
+        "Unable to submit your enquiry. Please try again later."
+    );
   }
 
   return {
     success: true,
-    message: result.message || "Your enquiry has been submitted.",
+    message:
+      result.message ||
+      "Your enquiry has been submitted successfully.",
   };
 }
