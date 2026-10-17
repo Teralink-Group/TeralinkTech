@@ -82,7 +82,7 @@ export default function RequestQuotationPage() {
     setIsSubmitting(true);
 
     try {
-      await submitEnquiry(form, "quotation");
+      await submitEnquiry(form, "request-quote-&-survey");
 
       setStatus({
         type: "success",
